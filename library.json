@@ -1,0 +1,20 @@
+{
+  "name": "ArduinoJoystickLib",
+  "version": "0.0.1",
+  "description": "A small, yet useful library for 5 pin joystick modules for use with Arduino.",
+  "keywords": "arduino, coding, tinkering, hardware, electronics",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/mr-ingenious/ArduinoJoystickLib.git"
+  },
+  "authors":
+  [
+    {
+      "name":" Mr. Ingenious"
+    }
+  ],
+  "license": "GPLv3",
+  "frameworks": "*",
+  "platforms": "*"
+}
