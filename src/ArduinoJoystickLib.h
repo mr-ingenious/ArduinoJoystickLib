@@ -61,13 +61,44 @@ class ArduinoJoystick {
 
   void printState();
 
- private:
+ protected:
   struct jsCalibrationInfo _c_data;
   int _vx_pin = 0, _vy_pin = 0, _sw_pin = 0;
   int _last_vx = 0, _last_vy = 0, _last_sw = 0;
   uint8_t _state = 0;
   bool isReady = false;
   bool isPreconfigured = false;
+};
+
+class ArduinoJoystickEventListener {
+ public:
+  ArduinoJoystickEventListener() {};
+  virtual void onStateChange(uint8_t state);
+};
+
+class ArduinoJoystickEventSource : public ArduinoJoystick {
+ public:
+  ArduinoJoystickEventSource() : ArduinoJoystick(){};
+  inline void registerListener(ArduinoJoystickEventListener* listener) {
+    if (NULL == _listener) {
+      _listener = listener;
+    }
+  };
+
+  inline uint8_t update() {
+    ArduinoJoystick::update();
+    
+    if (NULL != _listener && (_state != _lastState)) {
+      _listener->onStateChange(_state);
+      _lastState = _state;
+    }
+
+    return _state;
+  }
+
+ private:
+  ArduinoJoystickEventListener* _listener;
+  uint8_t _lastState = 0;
 };
 
 #endif
